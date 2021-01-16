@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Images Wall</title>
+    <title>Image Wall</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <nav>
         <div class="container mx-auto px-6 py-2 flex justify-between item-center"><!--nav container starts-->
 <a class="font-bold text-red-500 text-2xl lg:text-4xl" href="#">
     imageWALL
 </a>
 <div class="block lg:hidden"><!--mobile menu starts-->
-    <button class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-teal-500 apperance-none focus:outline-none">
+    <button class="flex items-center  px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-teal-500 apperance-none focus:outline-none">
         <svg class="file-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 <title>Menu</title>
 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
@@ -29,13 +30,62 @@
 </div><!--desktop menu ends-->
  </div><!--nav container ends-->
     </nav><!--nav ends-->
-   <div class="grid grid-cols-3 gap-4"><!--grid starts-->
+    <div class="py-2" style="background: linear-gradient(90deg, #945CD3 0%, #D6D99D 100%);"><!--desc starts-->
+<div class="container mx-auto px-6">
+<h3 class="text-3xl font-bold mb-2 text-white">
+    Looking for a photo? Find it posted in the imageWALL
+</h3>
+<!--search starts-->
+    <section id="header" class=" mx-20 my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="space-x-1 flex  w-full h-10">
+<input class=" bg-red-50 w-full rounded p-2" type="text" placeholder="Search for a photo " >
+<button class= " w-auto  hover:text-blue-50 rounded text-black p-2 bg-red-50" >
+    Search
+</button>
 
-   </div> <!--grid ends-->
+        </div>
+        <div class="w-full flex  justify-end flex-col ">
+            <input id="imageTitle" class=" w-4/5 border p-2 mb-2 " type="text" placeholder="Enter Image Title">
+            <input id="imageUrl" class=" w-4/5 border p-2 mb-2 " type="text" placeholder="Enter Image URL">
+            <button id="uploadImage" class="w-48 bg-pink-800 text-white px-4 py-2 rounded">Upload new image</button>
+        
+        </div>
+</section>
+
+<!--search ends-->
+</div>
+    </div><!--desc ends-->
+
+    <section id="photos" class="mx-20 my-5 grid grid-cols-1 md:grid-cols-4 gap-5">
+            
+        
+<!--
+            <article class="overflow-hidden rounded-lg shadow-lg">
+                <img class="w-full h-56 object-cover" src="img/gallery/image1.jpg" alt="image.tags" /></a>
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                  <h1 class="text-lg">image1</h1>
+              </header>
+              </article>
+            -->
+          
+
+          
+
+            
+          
+          
+      </section>
 
 
 
-   <script>
+
+
+
+
+
+
+
+   <script src="app.js">
 
    </script>
 </body>
