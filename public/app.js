@@ -38,14 +38,12 @@ uploadButton.addEventListener("click",function(){
     
    
    imagetitles.push(imageTitle);
-  console.log(imagetitles[i]);
-  console.log(i.toString());
+  console.log(imagetitles[i]+ " " + i.toString());
    i++;
 
             
        
-console.log(imageTitle);
-console.log(imageUrl);
+
 
 
 let imageArticle=document.createElement('article');

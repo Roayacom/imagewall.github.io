@@ -40,35 +40,31 @@
 </div><!--desktop menu ends-->
  </div><!--nav container ends-->
     </nav><!--nav ends-->
-    <div class="py-4" style="background: linear-gradient(70deg, #945CD3 0%, #D6D99D 100%);"><!--desc starts-->
-<div class="container  ">
-    <div class="flex justify-center">
-<i class=" text-3xl font-bold mb-10 text-yellow-100">
-    Looking for a photo? Find it posted in the</i> <span class="text-3xl ml-2 font-bold mb-2 text-purple-800" style="font-family: 'Wallpoet', cursive; letter-spacing: -6xp;" href="#">imageWALL
-    </span></div>
-    </div>
+    <div class="py-2" style="background: linear-gradient(70deg, #945CD3 0%, #D6D99D 100%);"><!--desc starts-->
+<div class="container mx-auto px-6">
+    
+<i class="text-3xl font-bold mb-2 text-yellow-100">
+    Looking for a photo? Find it posted in the</i> <span class="text-3xl font-bold mb-2 text-purple-800" style="font-family: 'Wallpoet', cursive; letter-spacing: -6xp;" href="#">imageWALL
+    </span>
 <!--search starts-->
-    <section id="header" class=" grid  md:grid-cols-2 gap-y-5 gap-x-96">
-        <div class="mt-8 ml-6 space-x-1 flex  w-full h-10">
-<input id="searchText" class=" bg-red-100 w-full rounded p-2" type="text" placeholder="Search for a photo " >
-<button id="searchButton" class= " w-auto hover:bg-red-200 text-black font-thin rounded  p-2 bg-red-100" >
+    <section id="header" class=" mx-20 my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="space-x-1 flex  w-full h-10">
+<input id="searchText" class=" bg-red-50 w-full rounded p-2" type="text" placeholder="Search for a photo " >
+<button id="searchButton" class= " w-auto hover:bg-red-100 text-black font-thin rounded  p-2 bg-red-50" >
     Search
 </button>
 
-        </div>
-        <div class=" w-full flex   flex-col  ">
-            <div>
-            <input id="imageUrl" class="h-10 bg-red-50 w-4/5 border p-2 mb-2 " type="text" placeholder="Enter Image URL" >
-            </div>
-            <div class="flex">
-            <input id="imageTitle" class="h-10 bg-red-50 w-2.5/5 border p-2 mb-2 " type="text" placeholder="Enter Image Title">
-            <button id="uploadImage" class="h-10 w-1.5/5 bg-purple-500 hover:font-bold hover:bg-purple-700 text-white  px-2 ml-1 py-2 rounded">Upload new image</button>
-        </div>
+        </div mr-2 >
+        <div class="w-full flex  justify-end flex-col ">
+            <input id="imageTitle" class="bg-red-50 w-4/5 border p-2 mb-2 " type="text" placeholder="Enter Image Title">
+            <input id="imageUrl" class="bg-red-50 w-4/5 border p-2 mb-2 " type="text" placeholder="Enter Image URL">
+            <button id="uploadImage" class="w-48 bg-purple-500 hover:font-bold hover:bg-purple-700 text-white px-4 py-2 rounded">Upload new image</button>
+        
         </div>
 </section>
 
 <!--search ends-->
-
+</div>
     </div><!--desc ends-->
 
     <section id="photos" class="mx-20 my-5 grid grid-cols-1 md:grid-cols-4 gap-5">
