@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Image Wall</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Wallpoet&display=swap" rel="stylesheet">
+
+    <style>
+     
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav style="background: linear-gradient(70deg, #945CD3 0%, #D6D99D 100%);">
+        <div class="container mx-auto px-6 py-2 flex justify-between item-center">
+            <!--nav container starts-->
+            <a class="font-bold text-purple-900 text-2xl lg:text-2xl "
+                style="font-family: 'Wallpoet', cursive; letter-spacing: -3px;" href="#">
+                imageWALL
+            </a>
+            <div class="block lg:hidden">
+                <!--mobile menu starts-->
+                <button
+                    class="flex items-center  px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-teal-500 apperance-none focus:outline-none">
+                    <svg class="file-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <title>Menu</title>
+                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                    </svg>
+                </button>
+            </div>
+            <!--mobile menu ends-->
+            <div class="hidden lg:block">
+                <!--desktop menu starts-->
+                <ul class="inline-flex">
+                    <li><a class="px-4 font-bold" href="/">Home</a></li>
+                    <li><a class="px-4 hover:text-gray-800" href="#">About</a></li>
+                    <li><a class="px-4 hover:text-gray-800" href="#">Contact</a></li>
+                </ul>
+            </div>
+            <!--desktop menu ends-->
+        </div>
+        <!--nav container ends-->
+    </nav>
+    <!--nav ends-->
+    <div class="py-4">
+        <!--desc starts-->
+
+        <!--search starts-->
+
+        <div class="px-6 py-2 flex justify-center w-full space-x-2 h-25">
+            <input id="searchText" class=" bg-red-50 w-1/2 rounded p-2" type="text" placeholder="Search for a photo ">
+            <button id="searchButton" class=" w-auto hover:bg-red-200 text-black hover:font-bold rounded  border p-2 bg-red-100">
+                Search
+            </button>
+
+        </div>
+
+
+
+
+    </div>
+    <div id="searchResult" class="hidden w-full  grid grid-col-1 grid-row-2 justify-center items-center  border p-4 bg-gray-100">
+        <div ><p id="searchStatus"></p></div>
+      <div> <img id="searchImage" class="hideen w-32 h-32"></div> 
+
+    </div>
+
+    <form id="formImgUpload" class=" w-full flex space-x-2  justify-center  p-6 ">
+  
+          <input id="inputImgTitle" type="text" class="h-10 bg-red-50 w-2.5/5 border p-2 mb-2 " type="text"
+                placeholder="Enter Image Title"> 
+                 <input id="inputImgUrl" type="text" class="w-3/5 h-10 bg-red-50 border p-2 mb-2 " type="text"
+                placeholder="Enter Image URL">
+        
+            
+            <button type="submit"
+                class="h-10 w-40 bg-red-100 hover:font-bold hover:bg-red-200 text-black border  px-2 ml-1 py-2 rounded">Upload
+                new image</button>
+       
+    </form>
+    <section id="photos" class="mx-20 my-5 grid grid-cols-1 md:grid-cols-4 gap-5">
+
+    </section>
+   
+    
+
+
+
+
+
+    <script src="app.js">  </script>
+
+
+</body>
+
+</html>

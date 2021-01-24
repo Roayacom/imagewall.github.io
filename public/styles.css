@@ -183893,3 +183893,77 @@ video {
 =======================================================================
 ======================================================================*/
 
+.acustom{
+  font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 28px;
+text-align: center;
+text-decoration-line: underline;
+
+color: #3F58DF;
+}
+.btnSigUpcustom {
+width: 80px;
+height: 30px;
+
+background: #6A2C70;
+border: 1px solid #F2C680;
+box-sizing: border-box;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+
+text-align: center;
+
+color: #FFFFFF;
+
+
+}
+
+.btnHerocustom {
+  width: 155px;
+  height: 60px;
+  
+  background: #6A2C70;
+  border: 1px solid #F2C680;
+  box-sizing: border-box;
+  
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  
+ 
+ 
+  color: #FFFFFF; 
+ 
+  
+  
+  }
+  .ptitlecustom {
+  
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 75px;
+color: #241909;
+font-weight:900;
+
+  }
+  .pbodycustom{
+   
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 42px;
+
+
+color: #645853;
+
+  }
