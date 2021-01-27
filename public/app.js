@@ -1,165 +1,192 @@
-var imgTitles = [];
-var imgTitlesIndex = 0;
 
+/** Class for images attributes */
 class img {
-    constructor(imgID, imgTitle, imgUrl, imgCreationTime, imgCat = []) {
+    constructor(imgID, imgTitle, imgUrl, imgDesc, imgCreationTime) {
         this.imgID = imgID;
         this.imgTitle = imgTitle;
         this.imgUrl = imgUrl;
         this.imgID = imgID;
+        this.imgDesc = imgDesc;
         this.imgCreationTime = imgCreationTime;
-        this.imgCat = imgCat;
-
     }
+}//class ends here 
+
+/** Class to validate inputs are not empty */
+class validator { //class starts here
+    static REQUIRED = 'REQUIRED';
+    static validate(value, flag, validatorValue) {
+        if (flag === this.REQUIRED) {
+            return value.trim().length > 0;
+        }
+    }
+}//class ends here
+
+//function to reset all textboxes
+function cleaner() {
+    document.getElementById('searchText').value = "";
+    document.getElementById('inputImgTitle').value = "";
+    document.getElementById('inputImgUrl').value = "";
+    document.getElementById('inputImgDesc').value = "";
 
 }
 
-class imagesCollection {
+
+/**calsse to save all images entered as array and do other functions */
+class imagesCollection {  //** class starts here */
     images = [];
-
-
     addImages(images) {
         this.images.push(images);
     }
 
+    searchID(clickedButtonID) {
+
+        let image = this.images.find(imageCollection => imageCollection.imgID == clickedButtonID);
+        document.querySelector(".viewImageTitle").innerHTML = image.imgTitle;
+        document.querySelector(".viewImage").src = image.imgUrl;
+        document.querySelector(".viewImageDate").innerHTML = "Created at " + image.imgCreationTime;
+        document.querySelector(".deleteImage").id = image.imgID;
+        document.querySelector(".viewImageDescription").innerHTML = "Description: " + image.imgDesc;
+    }
+
     searchImages(searchText) {
-    
 
-        console.log(searchText);
-
-
-        if (searchText) {
-            console.log(imageCollection);
-            document.getElementById('searchResult').classList.remove('hidden');
-
-            let image = this.images.find(imageCollection => imageCollection.imgTitle == searchText);
-
-            if (image) {
-                console.log("correct");
-                const newResult = new resultBox(image.imgTitle, image.imgUrl,"found");
-              
-            }
-            else {
-                console.log("incorrect");
-                document.getElementById('searchResult').classList.remove('hidden');
-                const newResult = new resultBox("", "","not found");
-                
-            }
-
-
-
-        } else {
-            alert('Please enter an image title to search for');
+        if (!validator.validate(searchText, validator.REQUIRED)) {
+            alert("Please enter an image title to search for");
+            cleaner();
+            return;
         }
-        console.log('you clicked on search');
-    }
-    deleteImages() {
+
+        document.getElementById('searchResult').classList.remove('hidden');
+
+        let image = this.images.find(imageCollection => imageCollection.imgTitle == searchText);
+
+        if (!image) {
+
+
+            console.log("incorrect");
+            document.getElementById('searchResult').classList.remove('hidden');
+            const newResult = new resultBox("", "", "not found");
+            cleaner();
+            return;
+        }
+
+        console.log("correct");
+
+        const newResult = new resultBox(image.imgTitle, image.imgUrl, "found");
+        cleaner();
 
     }
+    deleteID(clickedID) {
 
+        var confirmResult = confirm("Are you sure you want to delete the image?");
+        if (confirmResult) {
+            let imageIndex = this.images.findIndex(imageCollection => imageCollection.imgID == clickedID);
+            document.querySelector('.modal').classList.add("hidden");
+            this.images.splice(imageIndex, 1);
 
-}
+            if (this.images.length >= 0) {
+                new album();
+
+            }
+        }
+    }
+}//class ends here
 
 let imageCollection = new imagesCollection;
 class resultBox {
     constructor(imgTitle, imgImage, result) {
         this.imgTitle = imgTitle;
         this.imgImage = imgImage;
-        this.result=result;
-        let searchReultDiv = document.getElementById('searchResult');
-        searchReultDiv.classList.remove('hidden');
+        this.result = result;
+        document.getElementById('searchResult').classList.remove('hidden');
         let SearchStatusP = document.getElementById('searchStatus');
         let searchImage = document.getElementById('searchImage')
-        let enteredText=document.getElementById('searchText').value;
-       if (result=="found"){
-        SearchStatusP.innerHTML ="The picture '"+ enteredText+"' is found, see its preview below:";
+        let enteredText = document.getElementById('searchText').value;
+        if (result != "found") {
+
+            SearchStatusP.innerHTML = "The picture '" + enteredText + "' not found";
+            searchImage.classList.add('hidden');
+            return;
+        }
+        //else// 
+        SearchStatusP.innerHTML = "The picture '" + enteredText + "' is found, see its preview below:";
         searchImage.src = imgImage;
         searchImage.classList.remove('hidden');
-
-}else{ SearchStatusP.innerHTML ="The picture '"+ enteredText+"' not found";
-searchImage.classList.add('hidden');
-}
-
-
     }
 }
+
+function deleteClick(clickedID) {
+    imageCollection.deleteID(clickedID);
+}
+
+function viewClick(clickedID) {
+    document.getElementById('searchResult').classList.add('hidden');
+    var modal = document.querySelector('.modal');
+    imageCollection.searchID(clickedID);
+    modal.classList.remove("hidden");
+    console.log(clickedID);
+    console.log(imageCollection.images.length);
+}
+
+
 class album {
-    constructor(imgTitle, imgImage) {
-        this.imgTitle = imgTitle;
-        this.imgImage = imgImage;
-        let imageArticle = document.createElement('article');
-        imageArticle.classList = "overflow-hidden rounded-lg shadow-lg";
+    constructor() {
 
-        let imageHref = document.createElement('a');
+        var photoSection = document.getElementById('photos');
+        photoSection.innerHTML = '';
 
-        let imageImg = document.createElement('img');
-        imageImg.classList = "w-full h-56 object-cover";
-        imageImg.src = imgImage;
+        for (var i = 0; i < imageCollection.images.length; i++) {
 
+            let imageArticle = document.createElement('article');
+            imageArticle.classList = "overflow-hidden rounded-lg shadow-lg";
+            let imageImg = document.createElement('img');
+            imageImg.classList = "w-full h-56 object-cover";
+            imageImg.src = imageCollection.images[i].imgUrl;
 
-        let imageHeader = document.createElement('header');
-        imageHeader.classList = "flex bg-yellow-50 items-center justify-between leading-tight p-2 md:p-4";
+            let imageHeader = document.createElement('header');
+            imageHeader.classList = "flex bg-yellow-50 items-center justify-between leading-tight p-2 md:p-4";
 
-        let imageH1Title = document.createElement('h1');
-        imageH1Title.classList = "text-lg";
-        imageH1Title.textContent = imgTitle;
-        imageH1Title.setAttribute=("id","imageTitle");
+            let imageH1Title = document.createElement('h1');
+            imageH1Title.classList = "text-lg";
+            imageH1Title.textContent = imageCollection.images[i].imgTitle;
 
-        let modalButton = document.createElement('button');
-        modalButton.classList = "modal-open bg-black text-white ";
-        modalButton.setAttribute=("onclick","functionModal();");
-        modalButton.textContent="View Photo";
-       // modalButton.setAttribute("id", "modal-open");
+            const modalButton = document.createElement('button');
+            modalButton.classList = "modal-open bg-purple-800 hover:bg-purple-900 p-2 border shadow text-white ";
+            modalButton.id = imageCollection.images[i].imgID;
+            modalButton.setAttribute("onClick", "viewClick(this.id)")
+            modalButton.textContent = "View";
 
-        imageHeader.appendChild(imageH1Title);
-        imageHeader.appendChild(modalButton);
-        imageHref.appendChild(imageImg);
-        imageArticle.appendChild(imageHref);
-        imageArticle.appendChild(imageHeader);
-        document.getElementById('photos').appendChild(imageArticle);
-
-        function functionModal(){
-            console.log("you clicked");
+            imageHeader.appendChild(imageH1Title);
+            imageHeader.appendChild(modalButton);
+            imageArticle.appendChild(imageImg);
+            imageArticle.appendChild(imageHeader);
+            photoSection.appendChild(imageArticle);
         }
-        
+        if (imageCollection.images.length > 0) {
 
-    }
-    
+            document.querySelector('.closeModal').addEventListener('click', function () {
 
-
-}
-
-
-class validator {
-    static REQUIRED = 'REQUIRED';
-    // static MIN_LENGTH='MIN_LENGTH';
-
-    static validate(value, flag, validatorValue) {
-        if (flag === this.REQUIRED) {
-            return value.trim().length > 0;
+                document.querySelector('.modal').classList.add("hidden");
+            });
         }
-        // if (flag==this.MIN_LENGTH){
-        //     return value.trim().length >validatorValue;
-        // }
     }
 }
-document.getElementById('searchButton').addEventListener("click", function () {
-    imageCollection.searchImages(document.getElementById('searchText').value)
-});
+
 class imgUploadForm {
     constructor() {
         this.form = document.getElementById('formImgUpload');
         this.imgTitle = document.getElementById('inputImgTitle');
         this.imgUrl = document.getElementById('inputImgUrl');
-
+        this.imgDesc = document.getElementById('inputImgDesc')
         this.form.addEventListener('submit', this.uploadImgHandler.bind(this));
     }
     uploadImgHandler(event) {
         event.preventDefault();
-
-
+       document.getElementById('searchResult').classList.add('hidden');
         const enterImgTitle = this.imgTitle.value;
         const enterImgUrl = this.imgUrl.value;
+        const enterImgDesc = this.imgDesc.value;
+        const imgID = Math.random().toString(36).slice(2);
 
 
         if (
@@ -170,73 +197,23 @@ class imgUploadForm {
             alert("Please make sure you that you have entered the image title and URL ");
             return;
         }
+        let d = new Date();
+        const enterImgDate = d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear();
 
-        let imgCat = ['flower', 'plants'];
-        const newImage = new img(Math.random().toString(36).slice(2), enterImgTitle, enterImgUrl, new Date());
+        const newImage = new img(imgID, enterImgTitle, enterImgUrl, enterImgDesc, enterImgDate);
         imageCollection.addImages(newImage);
-        const newAlbum = new album(enterImgTitle, enterImgUrl);
-        console.log(imageCollection);
-
-        ///modal///
-
-       
-       
-
-        // var openmodal = document.querySelectorAll('.modal-open');
-        // for (var i = 0; i < openmodal.length; i++) {
-        //     openmodal[i].addEventListener('click', function (event) {
-        //         event.preventDefault();
-        //         toggleModal();
-        //     })
-        // }
-
-        // const overlay = document.querySelector('.modal-overlay');
-        // overlay.addEventListener('click', toggleModal);
-        // var closemodal = document.querySelectorAll('.modal-close')
-        // for (var i = 0; i < closemodal.length; i++) {
-        //     closemodal[i].addEventListener('click', toggleModal)
-        //     let selectedImageTitle=document.getElementById('selectedImageTitle');
-        
-        //     selectedImageTitle.innerHTML=TitleofImage;
-
-        // }
-        
-
-        // function toggleModal() {
-        //     const body = document.querySelector('body');
-        //     const modal = document.querySelector('.modal');
-        //     modal.classList.toggle('opacity-0');
-        //     modal.classList.toggle('pointer-event-none');
-        //     body.classList.toggle('modal-active')
-        // }
-
-        // ///end modal///
-        console.log(newImage);
-
-        imgTitles.push(enterImgTitle);
-        console.log(imgTitlesIndex + "=" + imgTitles[imgTitlesIndex]);
-        imgTitlesIndex++;
-
+        new album();
+        cleaner();
 
     }
 }
 
 new imgUploadForm();
+document.getElementById('searchButton').addEventListener("click", function () {
+    imageCollection.searchImages(document.getElementById('searchText').value)
+});
 
 
-   
-var modal = document.getElementById('.modal-open');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
-function functionModal(){
-    console.log("you clicked");
-}
 
 
 
