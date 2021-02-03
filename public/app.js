@@ -450,4 +450,4 @@ document.getElementById('searchButton').addEventListener("click", function () {
 // alert('Please make sure you have entered both image title and image URL');
 //     }
 // })
-// */
+// *
