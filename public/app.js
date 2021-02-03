@@ -1,5 +1,5 @@
-
-/** Class for images attributes */
+let imageCollection=JSON.parse(localStorage.getItem("images"));
+/** Class for images attributes **/
 class img {
     constructor(imgID, imgTitle, imgUrl, imgDesc, imgCreationTime) {
         this.imgID = imgID;
@@ -30,17 +30,13 @@ function cleaner() {
 
 }
 
+// /**calsse to save all images entered as array and do other functions */
 
-/**calsse to save all images entered as array and do other functions */
-class imagesCollection {  //** class starts here */
-    images = [];
-    addImages(images) {
-        this.images.push(images);
-    }
 
-    searchID(clickedButtonID) {
+    
+   function searchID(clickedButtonID) {
 
-        let image = this.images.find(imageCollection => imageCollection.imgID == clickedButtonID);
+        let image = imageCollection.find(imageCollection => imageCollection.imgID == clickedButtonID);
         document.querySelector(".viewImageTitle").innerHTML = image.imgTitle;
         document.querySelector(".viewImage").src = image.imgUrl;
         document.querySelector(".viewImageDate").innerHTML = "Created at " + image.imgCreationTime;
@@ -48,7 +44,7 @@ class imagesCollection {  //** class starts here */
         document.querySelector(".viewImageDescription").innerHTML = "Description: " + image.imgDesc;
     }
 
-    searchImages(searchText) {
+   function searchImages(searchText) {
 
         if (!validator.validate(searchText, validator.REQUIRED)) {
             alert("Please enter an image title to search for");
@@ -58,7 +54,7 @@ class imagesCollection {  //** class starts here */
 
         document.getElementById('searchResult').classList.remove('hidden');
 
-        let image = this.images.find(imageCollection => imageCollection.imgTitle == searchText);
+        let image = imageCollection.find(imageCollection => imageCollection.imgTitle == searchText);
 
         if (!image) {
 
@@ -66,6 +62,7 @@ class imagesCollection {  //** class starts here */
             console.log("incorrect");
             document.getElementById('searchResult').classList.remove('hidden');
             const newResult = new resultBox("", "", "not found");
+           
             cleaner();
             return;
         }
@@ -76,23 +73,93 @@ class imagesCollection {  //** class starts here */
         cleaner();
 
     }
-    deleteID(clickedID) {
+   function deleteID(clickedID) {
 
         var confirmResult = confirm("Are you sure you want to delete the image?");
         if (confirmResult) {
-            let imageIndex = this.images.findIndex(imageCollection => imageCollection.imgID == clickedID);
+            let imageIndex = imageCollection.findIndex(imageCollection => imageCollection.imgID == clickedID);
             document.querySelector('.modal').classList.add("hidden");
-            this.images.splice(imageIndex, 1);
+           imageCollection.splice(imageIndex, 1);
 
-            if (this.images.length >= 0) {
-                new album();
+            if (imageCollection.length >= 0) {
+               album();
 
             }
         }
     }
-}//class ends here
 
-let imageCollection = new imagesCollection;
+
+//let imageCollection = new imagesCollection;
+
+
+// /**calsse to save all images entered as array and do other functions */
+// class imagesCollection {  //** class starts here */
+//     images = [];
+//     addImages(images) {
+//         this.images.push(images);
+    
+ 
+//     }
+
+    
+//     searchID(clickedButtonID) {
+
+//         let image = this.images.find(imageCollection => imageCollection.imgID == clickedButtonID);
+//         document.querySelector(".viewImageTitle").innerHTML = image.imgTitle;
+//         document.querySelector(".viewImage").src = image.imgUrl;
+//         document.querySelector(".viewImageDate").innerHTML = "Created at " + image.imgCreationTime;
+//         document.querySelector(".deleteImage").id = image.imgID;
+//         document.querySelector(".viewImageDescription").innerHTML = "Description: " + image.imgDesc;
+//     }
+
+//     searchImages(searchText) {
+
+//         if (!validator.validate(searchText, validator.REQUIRED)) {
+//             alert("Please enter an image title to search for");
+//             cleaner();
+//             return;
+//         }
+
+//         document.getElementById('searchResult').classList.remove('hidden');
+
+//         let image = this.images.find(imageCollection => imageCollection.imgTitle == searchText);
+
+//         if (!image) {
+
+
+//             console.log("incorrect");
+//             document.getElementById('searchResult').classList.remove('hidden');
+//             const newResult = new resultBox("", "", "not found");
+           
+//             cleaner();
+//             return;
+//         }
+
+//         console.log("correct");
+
+//         const newResult = new resultBox(image.imgTitle, image.imgUrl, "found");
+//         cleaner();
+
+//     }
+//     deleteID(clickedID) {
+
+//         var confirmResult = confirm("Are you sure you want to delete the image?");
+//         if (confirmResult) {
+//             let imageIndex = this.images.findIndex(imageCollection => imageCollection.imgID == clickedID);
+//             document.querySelector('.modal').classList.add("hidden");
+//             this.images.splice(imageIndex, 1);
+
+//             if (this.images.length >= 0) {
+//                album();
+
+//             }
+//         }
+//     }
+// }//class ends here
+
+//let imageCollection = new imagesCollection;
+
+
 class resultBox {
     constructor(imgTitle, imgImage, result) {
         this.imgTitle = imgTitle;
@@ -116,61 +183,107 @@ class resultBox {
 }
 
 function deleteClick(clickedID) {
-    imageCollection.deleteID(clickedID);
+  //  imageCollection.deleteID(clickedID);
+  deleteID(clickedID);
 }
 
 function viewClick(clickedID) {
     document.getElementById('searchResult').classList.add('hidden');
     var modal = document.querySelector('.modal');
-    imageCollection.searchID(clickedID);
+  //  imageCollection.searchID(clickedID);
+  searchID(clickedID);
     modal.classList.remove("hidden");
     console.log(clickedID);
-    console.log(imageCollection.images.length);
+  
 }
 
 
-class album {
-    constructor() {
-
-        var photoSection = document.getElementById('photos');
-        photoSection.innerHTML = '';
-
-        for (var i = 0; i < imageCollection.images.length; i++) {
-
-            let imageArticle = document.createElement('article');
-            imageArticle.classList = "overflow-hidden rounded-lg shadow-lg";
-            let imageImg = document.createElement('img');
-            imageImg.classList = "w-full h-56 object-cover";
-            imageImg.src = imageCollection.images[i].imgUrl;
-
-            let imageHeader = document.createElement('header');
-            imageHeader.classList = "flex bg-yellow-50 items-center justify-between leading-tight p-2 md:p-4";
-
-            let imageH1Title = document.createElement('h1');
-            imageH1Title.classList = "text-lg";
-            imageH1Title.textContent = imageCollection.images[i].imgTitle;
-
-            const modalButton = document.createElement('button');
-            modalButton.classList = "modal-open bg-purple-800 hover:bg-purple-900 p-2 border shadow text-white ";
-            modalButton.id = imageCollection.images[i].imgID;
-            modalButton.setAttribute("onClick", "viewClick(this.id)")
-            modalButton.textContent = "View";
-
-            imageHeader.appendChild(imageH1Title);
-            imageHeader.appendChild(modalButton);
-            imageArticle.appendChild(imageImg);
-            imageArticle.appendChild(imageHeader);
-            photoSection.appendChild(imageArticle);
-        }
-        if (imageCollection.images.length > 0) {
-
-            document.querySelector('.closeModal').addEventListener('click', function () {
-
-                document.querySelector('.modal').classList.add("hidden");
-            });
-        }
-    }
+function album(){
+    var photoSection = document.getElementById('photos');
+            photoSection.innerHTML = '';
+    
+            for (var i = 0; i < imageCollection.length; i++) {
+    
+                let imageArticle = document.createElement('article');
+                imageArticle.classList = "overflow-hidden rounded-lg shadow-lg";
+                let imageImg = document.createElement('img');
+                imageImg.classList = "w-full h-56 object-cover";
+                imageImg.src = imageCollection[i].imgUrl;
+    
+                let imageHeader = document.createElement('header');
+                imageHeader.classList = "flex bg-yellow-50 items-center justify-between leading-tight p-2 md:p-4";
+    
+                let imageH1Title = document.createElement('h1');
+                imageH1Title.classList = "text-lg";
+                imageH1Title.textContent = imageCollection[i].imgTitle;
+    
+                const modalButton = document.createElement('button');
+                modalButton.classList = "modal-open bg-purple-800 hover:bg-purple-900 p-2 border shadow text-white ";
+                modalButton.id = imageCollection[i].imgID;
+                modalButton.setAttribute("onClick", "viewClick(this.id)")
+                modalButton.textContent = "View";
+    
+                imageHeader.appendChild(imageH1Title);
+                imageHeader.appendChild(modalButton);
+                imageArticle.appendChild(imageImg);
+                imageArticle.appendChild(imageHeader);
+                photoSection.appendChild(imageArticle);
+            }
+            if (imageCollection.length > 0) {
+    
+                document.querySelector('.closeModal').addEventListener('click', function () {
+    
+                    document.querySelector('.modal').classList.add("hidden");
+                });
+            }  
 }
+if (imageCollection.length>0){
+  album();  
+}
+
+
+// class album {
+//     constructor() {
+
+//         var photoSection = document.getElementById('photos');
+//         photoSection.innerHTML = '';
+
+//         for (var i = 0; i < imageCollection.images.length; i++) {
+
+//             let imageArticle = document.createElement('article');
+//             imageArticle.classList = "overflow-hidden rounded-lg shadow-lg";
+//             let imageImg = document.createElement('img');
+//             imageImg.classList = "w-full h-56 object-cover";
+//             imageImg.src = imageCollection.images[i].imgUrl;
+
+//             let imageHeader = document.createElement('header');
+//             imageHeader.classList = "flex bg-yellow-50 items-center justify-between leading-tight p-2 md:p-4";
+
+//             let imageH1Title = document.createElement('h1');
+//             imageH1Title.classList = "text-lg";
+//             imageH1Title.textContent = imageCollection.images[i].imgTitle;
+
+//             const modalButton = document.createElement('button');
+//             modalButton.classList = "modal-open bg-purple-800 hover:bg-purple-900 p-2 border shadow text-white ";
+//             modalButton.id = imageCollection.images[i].imgID;
+//             modalButton.setAttribute("onClick", "viewClick(this.id)")
+//             modalButton.textContent = "View";
+
+//             imageHeader.appendChild(imageH1Title);
+//             imageHeader.appendChild(modalButton);
+//             imageArticle.appendChild(imageImg);
+//             imageArticle.appendChild(imageHeader);
+//             photoSection.appendChild(imageArticle);
+//         }
+//         if (imageCollection.images.length > 0) {
+
+//             document.querySelector('.closeModal').addEventListener('click', function () {
+
+//                 document.querySelector('.modal').classList.add("hidden");
+//             });
+//         }
+//     }
+// }
 
 class imgUploadForm {
     constructor() {
@@ -199,18 +312,47 @@ class imgUploadForm {
         }
         let d = new Date();
         const enterImgDate = d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear();
+        
 
         const newImage = new img(imgID, enterImgTitle, enterImgUrl, enterImgDesc, enterImgDate);
-        imageCollection.addImages(newImage);
-        new album();
+       // imageCollection.addImages(newImage);
+      
+        // Get the existing data
+var existingLocalStorage = localStorage.getItem('images');
+
+// If no existing data, create an array
+// Otherwise, convert the localStorage string to an array
+existingLocalStorage = existingLocalStorage ? JSON.parse(existingLocalStorage) : [];
+
+// Add new data to localStorage Array
+existingLocalStorage.push(newImage);
+
+// Save back to localStorage
+localStorage.setItem('images', JSON.stringify(existingLocalStorage));
+      
+    
+    
+
+imageCollection=JSON.parse(localStorage.getItem("images"));
+    
+    
+   
+        
+     //   new album();
+    
+     album();
+     
         cleaner();
+       
 
     }
 }
 
 new imgUploadForm();
+
+
 document.getElementById('searchButton').addEventListener("click", function () {
-    imageCollection.searchImages(document.getElementById('searchText').value)
+   searchImages(document.getElementById('searchText').value)
 });
 
 
