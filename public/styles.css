@@ -183905,6 +183905,8 @@ text-decoration-line: underline;
 color: #3F58DF;
 }
 .btnSigUpcustom {
+width: 80px;
+height: 30px;
 
 background: #6A2C70;
 border: 1px solid #F2C680;
@@ -183913,7 +183915,7 @@ box-sizing: border-box;
 font-family: Roboto;
 font-style: normal;
 font-weight: bold;
-
+font-size: 18px;
 
 text-align: center;
 
