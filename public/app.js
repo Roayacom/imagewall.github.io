@@ -1,4 +1,8 @@
-let imageCollection=JSON.parse(localStorage.getItem("images"));
+let imageCollection=[];
+
+
+if (localStorage.length>0){
+imageCollection=JSON.parse(localStorage.getItem("images"))};
 /** Class for images attributes **/
 class img {
     constructor(imgID, imgTitle, imgUrl, imgDesc, imgCreationTime) {
@@ -80,6 +84,7 @@ function cleaner() {
             let imageIndex = imageCollection.findIndex(imageCollection => imageCollection.imgID == clickedID);
             document.querySelector('.modal').classList.add("hidden");
            imageCollection.splice(imageIndex, 1);
+           localStorage.setItem('images', JSON.stringify(imageCollection));
 
             if (imageCollection.length >= 0) {
                album();
@@ -237,8 +242,9 @@ function album(){
                 });
             }  
 }
-if (imageCollection.length>0){
-  album();  
+if (imageCollection.length > 0){
+  album(); 
+  
 }
 
 
